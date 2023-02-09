@@ -108,9 +108,19 @@ function __handleChangelog(changelog,seqNum,hitchhiker,cid)
 			/* react to the removal of an edge */
 			else if( step['op'] == 'RMEDGE' )	
 			{
+				var uri1 = step['id1'];
+				var uri2 = step['id2'];
+
+				__shadowTrack(uri1, 'red');
+				__shadowTrack(uri2, 'red');
+
+				function __edgeVanish(){
 				__removeEdge(
 						step['id1']+'--'+step['id2'],
 						[step['id1'],step['id2']]);
+				}
+
+				window.setTimeout(__edgeVanish, 500);
 
 				if( __selection != undefined )
 					__select( utils.filter(__selection['items'],[edgeId]) );
@@ -121,6 +131,9 @@ function __handleChangelog(changelog,seqNum,hitchhiker,cid)
 			{
 				var node  = utils.jsonp(step['node']),
 					 icon = __createIcon(node,step['id']);
+				
+				var uri = step['id'];
+				__shadowTrack(uri, 'green');
 
 				if( '$segments' in node )
 				{	
@@ -134,11 +147,21 @@ function __handleChangelog(changelog,seqNum,hitchhiker,cid)
 
 			/* react to the removal of a node */	
 			else if( step['op'] == 'RMNODE' )	
-			{
-				__icons[step['id']]['icon'].remove();
-				__icons[step['id']]['edgesOut'].forEach(__removeEdge);
-				__icons[step['id']]['edgesIn'].forEach(__removeEdge);
-				delete __icons[step['id']];
+			{	
+				var uri = step['id'];
+				
+				console.log('URI ' + step['id']);
+								
+				__shadowTrack(uri, 'red');
+				
+				function __nodeVanish(){
+					__icons[step['id']]['icon'].remove();
+					__icons[step['id']]['edgesOut'].forEach(__removeEdge);
+					__icons[step['id']]['edgesIn'].forEach(__removeEdge);
+					delete __icons[step['id']];
+				}
+
+				window.setTimeout(__nodeVanish, 500);
 
 				if( __selection != undefined )
 					__select( utils.filter(__selection['items'],[step['id']]) );

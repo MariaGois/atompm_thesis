@@ -160,7 +160,6 @@ function __flash(uri,color,timeout)
 	window.setTimeout(turnOff,timeout || 500);
 }
 
-
 /* if 'uri' isn't already highlighted, unhighlights whatever is (if applicable) 
 	and highlights 'uri'... highlighting implies setting 
 	
@@ -172,6 +171,20 @@ function __flash(uri,color,timeout)
 		'turnOff' :: a function that unhighlights 'uri' and nodes from step 2. if 
 						 any... the try/catch blocks ensure safety against deletion of
 						 highlighted icons */
+
+function __shadowTrack(uri, color)
+{
+	__icons[uri]['icon'].highlight({'color':color || 'slategray','fill':true});
+
+	function removeShadow(){
+		try			{__icons[uri]['icon'].unhighlight();} 
+		catch(err)	{
+			console.log(err);
+		}
+	}
+	window.setTimeout(removeShadow, 500);
+}
+
 function __highlight(uri,followCrossFormalismLinks,timeout,color)
 {
 	if( ! isHighlighted(uri) )

@@ -163,6 +163,7 @@ Raphael.fn.group = function() {
 					 rect.attr('opacity',opacity);
 					 rect.attr('stroke-width',width);
 					 rect.node.setAttribute('__highlight',1);
+					 
 					 if( args['fill'] )
 						 rect.attr('fill',color);
 					 
