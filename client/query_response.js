@@ -111,8 +111,8 @@ function __handleChangelog(changelog,seqNum,hitchhiker,cid)
 				var uri1 = step['id1'];
 				var uri2 = step['id2'];
 
-				__shadowTrack(uri1, 'red');
-				__shadowTrack(uri2, 'red');
+				//__shadowTrack(uri1, 'yellow');
+				//__shadowTrack(uri2, 'yellow');
 
 				function __edgeVanish(){
 				__removeEdge(
@@ -120,7 +120,7 @@ function __handleChangelog(changelog,seqNum,hitchhiker,cid)
 						[step['id1'],step['id2']]);
 				}
 
-				window.setTimeout(__edgeVanish, 500);
+				//window.setTimeout(__edgeVanish, 800);
 
 				if( __selection != undefined )
 					__select( utils.filter(__selection['items'],[edgeId]) );
@@ -161,7 +161,7 @@ function __handleChangelog(changelog,seqNum,hitchhiker,cid)
 					delete __icons[step['id']];
 				}
 
-				window.setTimeout(__nodeVanish, 500);
+				window.setTimeout(__nodeVanish, 800);
 
 				if( __selection != undefined )
 					__select( utils.filter(__selection['items'],[step['id']]) );
@@ -211,6 +211,8 @@ function __handleChangelog(changelog,seqNum,hitchhiker,cid)
 						icon.setAttr('__sy',newVal[1]);
 					}
 					__setIconTransform(step['id']);
+					var uri = step['id'];
+					__shadowTrack(uri, 'yellow');
 				}
 
 				/* CASE 2 */
@@ -225,25 +227,28 @@ function __handleChangelog(changelog,seqNum,hitchhiker,cid)
 						segments  = step['new_val'];
 						linkStyle = utils.jsonp(icon.getAttr('__linkStyle'));
 						icon.setAttr('__segments',utils.jsons(segments));
+						
 					}
 					else if (step['attr'] == 'link-style')
 					{
 						segments  = utils.jsonp(icon.getAttr('__segments'));
 						linkStyle = step['new_val'];
 						icon.setAttr('__linkStyle',utils.jsons(linkStyle));
+						var uri = step['attr'];
 					}
 					else
 					{
 						segments  = utils.jsonp(icon.getAttr('__segments'));
 						linkStyle = utils.jsonp(icon.getAttr('__linkStyle'));
 					}
+
 					for( var edgeId in segments )
 						if( edgeId in __edges )
 							__redrawEdge(edgeId,segments[edgeId],linkStyle);
 						else
 							/* react to the creation of an edge */
 							__createEdge( 
-									segments[edgeId], linkStyle, edgeId, step['id']);
+									segments[edgeId], linkStyle, edgeId, step['id']);					
 				}
 
 				/* CASE 3

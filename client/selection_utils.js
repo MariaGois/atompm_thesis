@@ -182,7 +182,7 @@ function __shadowTrack(uri, color)
 			console.log(err);
 		}
 	}
-	window.setTimeout(removeShadow, 500);
+	window.setTimeout(removeShadow, 800);
 }
 
 function __highlight(uri,followCrossFormalismLinks,timeout,color)
