@@ -174,7 +174,7 @@ function __flash(uri,color,timeout)
 
 function __shadowTrack(uri, color)
 {
-	__icons[uri]['icon'].highlight({'color':color || 'slategray','fill':true});
+	__icons[uri]['icon'].highlight({'color':color || false,'fill':true});
 
 	function removeShadow(){
 		try			{__icons[uri]['icon'].unhighlight();} 
