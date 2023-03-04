@@ -144,7 +144,7 @@ function __handleChangelog(changelog, seqNum, hitchhiker, cid) {
 					delete __icons[step['id']];
 				}
 
-				window.setTimeout(__nodeVanish, 800);
+				window.setTimeout(__nodeVanish, 2000);
 
 				if (__selection != undefined)
 					__select(utils.filter(__selection['items'], [step['id']]));
