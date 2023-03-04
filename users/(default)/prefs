@@ -11,6 +11,12 @@
 		"type": "boolean",
 		"value": true
 	},
+	
+	"confirm-shadow-tracking": {
+		"type": "boolean",
+		"value": true
+	},
+	
 	"default-mt-dcl": {
 		"type": "ENUM(JAVASCRIPT,PYTHON)",
 		"value": "PYTHON"
