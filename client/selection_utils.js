@@ -6,6 +6,7 @@
 var __selectionOverlay;
 var __highlighted = [];
 var __selection;
+var __prefs;
 
 function __isSelected(it)
 {
@@ -174,8 +175,11 @@ function __flash(uri,color,timeout)
 
 function __shadowTrack(uri, color)
 {
-	__icons[uri]['icon'].highlight({'color':color || false,'fill':true});
-
+	console.log(__prefs);
+	if (__prefs['confirm-shadow-tracking']['value'] && ! isHighlighted(uri)){
+		__icons[uri]['icon'].highlight({'color':color || false,'fill':true});
+	}
+	
 	function removeShadow(){
 		try			{__icons[uri]['icon'].unhighlight();} 
 		catch(err)	{

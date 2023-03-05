@@ -166,8 +166,14 @@ function __handleChangelog(changelog, seqNum, hitchhiker, cid) {
 				var uri = step['id'];
 				
 				//console.log('URI ' + step.getAttr('position'));
-		
 
+				/*if(utils.contains(['position', 'orientation', 'scale'], step['attr']))
+				{
+					__shadowTrack(uri, 'yellow');
+				}else{
+					__shadowTrack(uri, 'orange');
+				}*/
+		
 				/* CASE 1 */
 				if (utils.contains(['position', 'orientation', 'scale'], step['attr'])) {
 					var newVal = step['new_val'],
@@ -195,7 +201,7 @@ function __handleChangelog(changelog, seqNum, hitchhiker, cid) {
 						icon.setAttr('__sy', newVal[1]);
 					}
 					__setIconTransform(step['id']);
-					__shadowTrack(uri, 'yellow');
+					__shadowTrack(uri, 'orange');
 				}
 
 				/* CASE 2 */
@@ -327,7 +333,7 @@ function __handleChangelog(changelog, seqNum, hitchhiker, cid) {
 						__valignText(vobj);
 				}
 
-				if (__isSelected(step['id'])){__shadowTrack(uri, 'orange');
+				if (__isSelected(step['id'])){ __shadowTrack(uri, 'orange');
 				console.log('bbbbbbbbbbbbb');
 					utils.doAfterUnlessRepeated(
 						function (selection) {

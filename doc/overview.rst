@@ -317,4 +317,7 @@ Several parameters can be tweaked for a more personalized user experience. Their
 +---------------------------------------+-----------------------------------------------------------------------------+-----------------------------+---------+
 | *autoloaded-model*                    | Model to load when starting a new AToMPM client.                            |  model path                 | ''      |
 +---------------------------------------+-----------------------------------------------------------------------------+-----------------------------+---------+
+| *confirm-shadow-tracking*             | When set to \textit{true}, the collaboration feature *shadow tracking*      |  boolean                    | false   |
+|                                       | is turned on.                                                               |                             |         |
++---------------------------------------+-----------------------------------------------------------------------------+-----------------------------+---------+
 
