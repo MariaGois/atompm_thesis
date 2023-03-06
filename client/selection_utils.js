@@ -161,17 +161,10 @@ function __flash(uri,color,timeout)
 	window.setTimeout(turnOff,timeout || 500);
 }
 
-/* if 'uri' isn't already highlighted, unhighlights whatever is (if applicable) 
-	and highlights 'uri'... highlighting implies setting 
-	
-	1. highlighting 'uri'
-	2. possibly highlighting 'uri''s cross-formalism neighbors
-  	3. possibly setting a timeout to remove the highlight
-	4. setting up the __highlighted object like so
-		'uri' 	 :: 'uri'
-		'turnOff' :: a function that unhighlights 'uri' and nodes from step 2. if 
-						 any... the try/catch blocks ensure safety against deletion of
-						 highlighted icons */
+/* the user can choose to turn this feature on and off through the preferences file.
+if the feature is turned on and the 'uri' isn't already highlighted, 
+it temporarily highlights icons, depending on the changes made to it. 
+The color is defined according to the type of CRUD operation*/ 
 
 function __shadowTrack(uri, color)
 {
@@ -188,6 +181,18 @@ function __shadowTrack(uri, color)
 	}
 	window.setTimeout(removeShadow, 2000);
 }
+
+/* if 'uri' isn't already highlighted, unhighlights whatever is (if applicable) 
+	and highlights 'uri'... highlighting implies setting 
+	
+	1. highlighting 'uri'
+	2. possibly highlighting 'uri''s cross-formalism neighbors
+  	3. possibly setting a timeout to remove the highlight
+	4. setting up the __highlighted object like so
+		'uri' 	 :: 'uri'
+		'turnOff' :: a function that unhighlights 'uri' and nodes from step 2. if 
+						 any... the try/catch blocks ensure safety against deletion of
+						 highlighted icons */
 
 function __highlight(uri,followCrossFormalismLinks,timeout,color)
 {
