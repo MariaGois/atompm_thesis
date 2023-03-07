@@ -179,7 +179,7 @@ function __shadowTrack(uri, color)
 			console.log(err);
 		}
 	}
-	window.setTimeout(removeShadow, 2000);
+	window.setTimeout(removeShadow, 7000);
 }
 
 /* if 'uri' isn't already highlighted, unhighlights whatever is (if applicable) 
