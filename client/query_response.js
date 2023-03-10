@@ -6,7 +6,8 @@
 var __nextASWSequenceNumber = '/asworker#1',
 	__nextCSWSequenceNumber = '/csworker#1',
 	__pendingASWChangelogs = [],
-	__pendingCSWChangelogs = [];
+	__pendingCSWChangelogs = [],
+	__prefs;
 
 
 /* delete pending changelogs older than the specified sequence number */
@@ -115,8 +116,7 @@ function __handleChangelog(changelog, seqNum, hitchhiker, cid) {
 			else if (step['op'] == 'MKNODE') {
 				var node = utils.jsonp(step['node']),
 					icon = __createIcon(node, step['id']);
-
-					console.log('dentro do create')
+					
 				var uri = step['id'];
 				__shadowTrack(uri, 'green');
 
@@ -133,8 +133,6 @@ function __handleChangelog(changelog, seqNum, hitchhiker, cid) {
 			else if (step['op'] == 'RMNODE') {
 				var uri = step['id'];
 
-				console.log('URI ' + step['id']);
-
 				__shadowTrack(uri, 'red');
 
 				function __nodeVanish() {
@@ -143,8 +141,13 @@ function __handleChangelog(changelog, seqNum, hitchhiker, cid) {
 					__icons[step['id']]['edgesIn'].forEach(__removeEdge);
 					delete __icons[step['id']];
 				}
+				
+				if(__prefs['confirm-shadow-tracking']['value']){
+					window.setTimeout(__nodeVanish, 7000);
+				} else{
+					__nodeVanish();
+				}
 
-				window.setTimeout(__nodeVanish, 7000);
 
 				if (__selection != undefined)
 					__select(utils.filter(__selection['items'], [step['id']]));
@@ -164,15 +167,6 @@ function __handleChangelog(changelog, seqNum, hitchhiker, cid) {
 						corresponding vobject */
 			else if (step['op'] == 'CHATTR') {
 				var uri = step['id'];
-				
-				//console.log('URI ' + step.getAttr('position'));
-
-				/*if(utils.contains(['position', 'orientation', 'scale'], step['attr']))
-				{
-					__shadowTrack(uri, 'yellow');
-				}else{
-					__shadowTrack(uri, 'orange');
-				}*/
 		
 				/* CASE 1 */
 				if (utils.contains(['position', 'orientation', 'scale'], step['attr'])) {
@@ -305,7 +299,6 @@ function __handleChangelog(changelog, seqNum, hitchhiker, cid) {
 						vobj.translate(
 							utils.contains(['r', 'rx'], attr) ? offset : 0,
 							utils.contains(['r', 'ry'], attr) ? offset : 0);
-							console.log('eeeeeeeeeeee');
 					}
 
 					if (step['id'].match(/\/PolygonIcon\//) &&
@@ -320,21 +313,20 @@ function __handleChangelog(changelog, seqNum, hitchhiker, cid) {
 					catch (err) { var newVal = step['new_val']; }
 					if (attr == 'style'){
 						vobj.attr(newVal);
-						console.log('ddddddddddddd');}
+					}
 					else if (attr == 'src'){
 						vobj.attr('src', __relativizeURL(newVal));
-						console.log('cccccccccc');
 						
 				}else
 						vobj.attr(__ATTR_MAP[attr] || attr, newVal);
-						console.log('aaaaaaaaa');
 
 					if (vobj.type == 'text')
 						__valignText(vobj);
 				}
 
-				if (__isSelected(step['id'])){ __shadowTrack(uri, 'orange');
-				console.log('bbbbbbbbbbbbb');
+				if (__isSelected(step['id'])){ 
+					__shadowTrack(uri, 'orange');
+
 					utils.doAfterUnlessRepeated(
 						function (selection) {
 							__select(selection);

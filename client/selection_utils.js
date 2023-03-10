@@ -168,7 +168,7 @@ The color is defined according to the type of CRUD operation*/
 
 function __shadowTrack(uri, color)
 {
-	console.log(__prefs);
+	
 	if (__prefs['confirm-shadow-tracking']['value'] && ! isHighlighted(uri)){
 		__icons[uri]['icon'].highlight({'color':color || false,'fill':true});
 	}
